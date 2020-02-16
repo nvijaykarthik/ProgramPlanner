@@ -1,18 +1,26 @@
 package io.nvijaykarthik.pi.planner.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Portfolio {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
 	@Column
 	String name;
+	@Column
+	String createdBy;
+	@Column
+	LocalDate createdDate=LocalDate.now();
+	
 	public Long getId() {
 		return id;
 	}
@@ -25,5 +33,18 @@ public class Portfolio {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
+	}
+
 	
 }

@@ -5,13 +5,14 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class IterationPlanEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
 	@Column
 	Integer itrNo;
@@ -23,6 +24,10 @@ public class IterationPlanEntity {
 	LocalDate endDate;
 	@Column
 	Integer workingDays;
+	@Column
+	String createdBy;
+	@Column
+	LocalDate createdDate=LocalDate.now();
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +63,18 @@ public class IterationPlanEntity {
 	}
 	public void setWorkingDays(Integer workingDays) {
 		this.workingDays = workingDays;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
 	}
 
 }

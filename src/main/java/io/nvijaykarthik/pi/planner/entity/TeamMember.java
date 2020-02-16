@@ -1,15 +1,18 @@
 package io.nvijaykarthik.pi.planner.entity;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class TeamMember {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
 	@Column
 	String memberName;
@@ -17,6 +20,10 @@ public class TeamMember {
 	String role;
 	@Column
 	Long teamId;
+	@Column
+	String createdBy;
+	@Column
+	LocalDate createdDate=LocalDate.now();
 	
 	public Long getId() {
 		return id;
@@ -42,5 +49,17 @@ public class TeamMember {
 	public void setTeamId(Long teamId) {
 		this.teamId = teamId;
 	}
-	
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
+	}
+
 }

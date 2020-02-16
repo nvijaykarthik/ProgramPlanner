@@ -25,6 +25,10 @@ public class ProgramPlanEntity {
 	LocalDate startDate;
 	@Column
 	LocalDate endDate;
+	@Column
+	String createdBy;
+	@Column
+	LocalDate createdDate=LocalDate.now();
 	public Long getId() {
 		return id;
 	}
@@ -61,6 +65,18 @@ public class ProgramPlanEntity {
 	}
 	public void setFiYear(String fiYear) {
 		this.fiYear = fiYear;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public LocalDate getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
 	}
 
 }
