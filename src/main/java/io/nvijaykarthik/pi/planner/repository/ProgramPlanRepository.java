@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import io.nvijaykarthik.pi.planner.entity.ProgramPlanEntity;
+import io.nvijaykarthik.pi.planner.entity.ProgramPlan;
 
-public interface ProgramPlanRepository extends JpaRepository<ProgramPlanEntity, Long>{
+public interface ProgramPlanRepository extends JpaRepository<ProgramPlan, Long>{
 
-	List<ProgramPlanEntity> findByFiYearAndPortfolioId(String fiYear,Long portfolioId);
+	List<ProgramPlan> findByFiYearAndPortfolioId(String fiYear,Long portfolioId);
 
 }

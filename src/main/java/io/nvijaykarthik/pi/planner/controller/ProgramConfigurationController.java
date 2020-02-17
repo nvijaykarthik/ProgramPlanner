@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.nvijaykarthik.pi.planner.entity.IterationPlanEntity;
-import io.nvijaykarthik.pi.planner.entity.ProgramPlanEntity;
+import io.nvijaykarthik.pi.planner.entity.IterationPlan;
+import io.nvijaykarthik.pi.planner.entity.ProgramPlan;
 import io.nvijaykarthik.pi.planner.repository.IterationPlanRepository;
 import io.nvijaykarthik.pi.planner.repository.ProgramPlanRepository;
 
@@ -30,19 +30,19 @@ public class ProgramConfigurationController {
 	
 	@PutMapping("/createProgramCalendar")
 	@Transactional
-	public List<ProgramPlanEntity> createProgramPlanCalendar(@RequestParam String fiYear,@RequestParam Long portfolioId){
-		List<ProgramPlanEntity> pies=new ArrayList<ProgramPlanEntity>();
+	public List<ProgramPlan> createProgramPlanCalendar(@RequestParam String fiYear,@RequestParam Long portfolioId){
+		List<ProgramPlan> pies=new ArrayList<ProgramPlan>();
 		for(int i=1;i<5;i++) {
-			ProgramPlanEntity pie= new ProgramPlanEntity();
+			ProgramPlan pie= new ProgramPlan();
 			pie.setFiYear(fiYear);
 			pie.setPiNo(i);
 			pie.setPortfolioId(portfolioId);
 			pies.add(pie);
 		}
-		List<ProgramPlanEntity> sPies=programPlanRepository.saveAll(pies);
-		for(ProgramPlanEntity pie:sPies) {
+		List<ProgramPlan> sPies=programPlanRepository.saveAll(pies);
+		for(ProgramPlan pie:sPies) {
 			for(int i=1;i<=5;i++) {
-				IterationPlanEntity ite= new IterationPlanEntity();
+				IterationPlan ite= new IterationPlan();
 				ite.setItrNo(i);
 				ite.setProgramPlanId(pie.getId());
 				ite.setWorkingDays(10);
@@ -53,22 +53,22 @@ public class ProgramConfigurationController {
 	}
 	
 	@PostMapping("/saveProgramCalendar")
-	public ProgramPlanEntity saveProgramPlanEntity(@RequestBody ProgramPlanEntity programPlanEntity) {
+	public ProgramPlan saveProgramPlanEntity(@RequestBody ProgramPlan programPlanEntity) {
 		return programPlanRepository.save(programPlanEntity);
 	}
 	
 	@PostMapping("/saveIterationCalendar")
-	public IterationPlanEntity saveIterationEntity(@RequestBody IterationPlanEntity iterationPlanEntity) {
+	public IterationPlan saveIterationEntity(@RequestBody IterationPlan iterationPlanEntity) {
 		return iterationPlanRepository.save(iterationPlanEntity);
 	}
 	
 	@GetMapping("/getProgramCalendar")
-	public List<ProgramPlanEntity> getProgramPlanCalendar(@RequestParam String fiYear,@RequestParam Long portfolioId){
+	public List<ProgramPlan> getProgramPlanCalendar(@RequestParam String fiYear,@RequestParam Long portfolioId){
 		return programPlanRepository.findByFiYearAndPortfolioId(fiYear, portfolioId);
 	}
 	
 	@GetMapping("/getIterationCalendar")
-	public List<IterationPlanEntity> getIterationPlanCalendar(@RequestParam Long programPlanId){
+	public List<IterationPlan> getIterationPlanCalendar(@RequestParam Long programPlanId){
 		return iterationPlanRepository.findByProgramPlanId(programPlanId);
 	}
 	

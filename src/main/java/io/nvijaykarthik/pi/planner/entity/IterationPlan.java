@@ -9,22 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ProgramPlanEntity {
+public class IterationPlan {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
-
 	@Column
-	Integer piNo;
+	Integer itrNo;
 	@Column
-	String fiYear;
-	@Column
-	Long portfolioId;
+	Long programPlanId;
 	@Column
 	LocalDate startDate;
 	@Column
 	LocalDate endDate;
+	@Column
+	Integer workingDays;
 	@Column
 	String createdBy;
 	@Column
@@ -35,18 +34,17 @@ public class ProgramPlanEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Integer getPiNo() {
-		return piNo;
+	public Integer getItrNo() {
+		return itrNo;
 	}
-	public void setPiNo(Integer piNo) {
-		this.piNo = piNo;
+	public void setItrNo(Integer itrNo) {
+		this.itrNo = itrNo;
 	}
-
-	public Long getPortfolioId() {
-		return portfolioId;
+	public Long getProgramPlanId() {
+		return programPlanId;
 	}
-	public void setPortfolioId(Long portfolioId) {
-		this.portfolioId = portfolioId;
+	public void setProgramPlanId(Long programPlanId) {
+		this.programPlanId = programPlanId;
 	}
 	public LocalDate getStartDate() {
 		return startDate;
@@ -60,11 +58,11 @@ public class ProgramPlanEntity {
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
-	public String getFiYear() {
-		return fiYear;
+	public Integer getWorkingDays() {
+		return workingDays;
 	}
-	public void setFiYear(String fiYear) {
-		this.fiYear = fiYear;
+	public void setWorkingDays(Integer workingDays) {
+		this.workingDays = workingDays;
 	}
 	public String getCreatedBy() {
 		return createdBy;

@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class VacationEntity {
+public class Vacation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

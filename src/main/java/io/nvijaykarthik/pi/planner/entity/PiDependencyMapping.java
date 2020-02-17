@@ -9,36 +9,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class IterationPlanEntity {
+public class PiDependencyMapping {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Long id;
+	Long Id;
 	@Column
-	Integer itrNo;
-	@Column
+	Long portfolioId;
+	
+	@Column(unique = true,nullable = false)
 	Long programPlanId;
 	@Column
-	LocalDate startDate;
+	Long myTeamId;
 	@Column
-	LocalDate endDate;
+	String myFeature;
 	@Column
-	Integer workingDays;
+	Long dependTeamId;
+	@Column
+	Long dependFeature;
 	@Column
 	String createdBy;
 	@Column
 	LocalDate createdDate=LocalDate.now();
 	public Long getId() {
-		return id;
+		return Id;
 	}
 	public void setId(Long id) {
-		this.id = id;
+		Id = id;
 	}
-	public Integer getItrNo() {
-		return itrNo;
+	public Long getPortfolioId() {
+		return portfolioId;
 	}
-	public void setItrNo(Integer itrNo) {
-		this.itrNo = itrNo;
+	public void setPortfolioId(Long portfolioId) {
+		this.portfolioId = portfolioId;
 	}
 	public Long getProgramPlanId() {
 		return programPlanId;
@@ -46,23 +49,29 @@ public class IterationPlanEntity {
 	public void setProgramPlanId(Long programPlanId) {
 		this.programPlanId = programPlanId;
 	}
-	public LocalDate getStartDate() {
-		return startDate;
+	public Long getMyTeamId() {
+		return myTeamId;
 	}
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
+	public void setMyTeamId(Long myTeamId) {
+		this.myTeamId = myTeamId;
 	}
-	public LocalDate getEndDate() {
-		return endDate;
+	public String getMyFeature() {
+		return myFeature;
 	}
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
+	public void setMyFeature(String myFeature) {
+		this.myFeature = myFeature;
 	}
-	public Integer getWorkingDays() {
-		return workingDays;
+	public Long getDependTeamId() {
+		return dependTeamId;
 	}
-	public void setWorkingDays(Integer workingDays) {
-		this.workingDays = workingDays;
+	public void setDependTeamId(Long dependTeamId) {
+		this.dependTeamId = dependTeamId;
+	}
+	public Long getDependFeature() {
+		return dependFeature;
+	}
+	public void setDependFeature(Long dependFeature) {
+		this.dependFeature = dependFeature;
 	}
 	public String getCreatedBy() {
 		return createdBy;
@@ -76,5 +85,4 @@ public class IterationPlanEntity {
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
-
 }

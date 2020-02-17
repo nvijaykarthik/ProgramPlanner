@@ -7,9 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.nvijaykarthik.pi.planner.entity.IterationPlanEntity;
+import io.nvijaykarthik.pi.planner.entity.IterationPlan;
 import io.nvijaykarthik.pi.planner.entity.TeamMember;
-import io.nvijaykarthik.pi.planner.entity.VacationEntity;
+import io.nvijaykarthik.pi.planner.entity.Vacation;
 import io.nvijaykarthik.pi.planner.repository.IterationPlanRepository;
 import io.nvijaykarthik.pi.planner.repository.TeamMembersRepository;
 import io.nvijaykarthik.pi.planner.repository.VacationRepository;
@@ -26,24 +26,24 @@ public class VacationService {
 	@Autowired
 	private IterationPlanRepository iterationPlanRepository;
 
-	public VacationEntity saveVacation(VacationEntity entity) {
+	public Vacation saveVacation(Vacation entity) {
 		return vacationRepository.save(entity);
 	}
 
-	public Map<Long, Map<Integer, VacationEntity>> getVacationPlanForProgram(Long programPlanId, Long teamId,Long portfolioId) {
-		List<VacationEntity> vacs = vacationRepository.findByTeamIdAndProgramPlanId(teamId, programPlanId);
+	public Map<Long, Map<Integer, Vacation>> getVacationPlanForProgram(Long programPlanId, Long teamId,Long portfolioId) {
+		List<Vacation> vacs = vacationRepository.findByTeamIdAndProgramPlanId(teamId, programPlanId);
 		List<TeamMember> teamMembers = teamMembersRepository.findByTeamId(teamId);
-		List<IterationPlanEntity> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programPlanId);
-		Map<Long, Map<Integer, VacationEntity>> vacations = new HashMap<>();
+		List<IterationPlan> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programPlanId);
+		Map<Long, Map<Integer, Vacation>> vacations = new HashMap<>();
 		// fill map with default value
 		for (TeamMember tm : teamMembers) {
-			Map<Integer, VacationEntity> itrData = new HashMap<>();
-			for (IterationPlanEntity itr : iterationPlanEntities) {
-				VacationEntity vac = vacs.stream()
+			Map<Integer, Vacation> itrData = new HashMap<>();
+			for (IterationPlan itr : iterationPlanEntities) {
+				Vacation vac = vacs.stream()
 						.filter(v -> v.getItrId().equals(itr.getId()) && v.getTeamMemberId().equals(tm.getId()))
 						.findAny().orElse(null);
 				if (null == vac) {
-					vac = new VacationEntity();
+					vac = new Vacation();
 					vac.setItrId(itr.getId());
 					vac.setLeaveDays(0);
 					vac.setPortfolioId(portfolioId);
@@ -60,12 +60,12 @@ public class VacationService {
 	}
 	
 	public Map<Long,Integer> getCapacity(Long programPlanId, Long teamId){
-		List<VacationEntity> vacs = vacationRepository.findByTeamIdAndProgramPlanId(teamId, programPlanId);
-		List<IterationPlanEntity> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programPlanId);
+		List<Vacation> vacs = vacationRepository.findByTeamIdAndProgramPlanId(teamId, programPlanId);
+		List<IterationPlan> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programPlanId);
 		List<TeamMember> teamMembers = teamMembersRepository.findByTeamId(teamId);
 		Integer totalMembers=teamMembers.size();
 		Map<Long,Integer> capacity=new HashMap<>();
-		for(IterationPlanEntity itrp:iterationPlanEntities) {
+		for(IterationPlan itrp:iterationPlanEntities) {
 			Integer vacSum=vacs.stream().filter(v->v.getItrId().equals(itrp.getId())).mapToInt(o->o.getLeaveDays()).sum();
 			Integer cap=(totalMembers*itrp.getWorkingDays())-vacSum;
 			capacity.put(itrp.getId(),cap);
