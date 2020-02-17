@@ -37,7 +37,7 @@ public class PiPlannerController {
 		return piPlannerRepository.findByProgramPlanIdAndTeamId(programId, teamId);
 	}
 	
-	@PostMapping
+	@PostMapping("/saveProgramGoal")
 	public ProgramGoal saveProgramGoal(@RequestBody ProgramGoal programGoal) {
 		return programGoalRepository.save(programGoal);
 	}

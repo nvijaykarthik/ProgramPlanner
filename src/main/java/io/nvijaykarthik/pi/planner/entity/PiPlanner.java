@@ -25,7 +25,7 @@ public class PiPlanner {
 	@Column
 	String featureId;
 	@Column
-	String storyNUmber;
+	String storyNumber;
 	@Column
 	String description;
 	@Column
@@ -76,11 +76,11 @@ public class PiPlanner {
 	public void setFeatureId(String featureId) {
 		this.featureId = featureId;
 	}
-	public String getStoryNUmber() {
-		return storyNUmber;
+	public String getStoryNumber() {
+		return storyNumber;
 	}
-	public void setStoryNUmber(String storyNUmber) {
-		this.storyNUmber = storyNUmber;
+	public void setStoryNumber(String storyNumber) {
+		this.storyNumber = storyNumber;
 	}
 	public String getDescription() {
 		return description;
