@@ -3,6 +3,7 @@ package io.nvijaykarthik.pi.planner.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,8 @@ public class VacationService {
 		List<Vacation> vacs = vacationRepository.findByTeamIdAndProgramPlanId(teamId, programPlanId);
 		List<IterationPlan> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programPlanId);
 		List<TeamMember> teamMembers = teamMembersRepository.findByTeamId(teamId);
-		Integer totalMembers=teamMembers.size();
+		List<TeamMember> dev_tstMembers=teamMembers.stream().filter(tm->(tm.getRole().equals("DEV") || tm.getRole().equals("TEST"))).collect(Collectors.toList());
+		Integer totalMembers=dev_tstMembers.size();
 		Map<Long,Integer> capacity=new HashMap<>();
 		for(IterationPlan itrp:iterationPlanEntities) {
 			Integer vacSum=vacs.stream().filter(v->v.getItrId().equals(itrp.getId())).mapToInt(o->o.getLeaveDays()).sum();

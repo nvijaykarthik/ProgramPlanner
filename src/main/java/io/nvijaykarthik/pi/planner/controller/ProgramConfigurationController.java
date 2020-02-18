@@ -2,6 +2,8 @@ package io.nvijaykarthik.pi.planner.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -70,6 +72,12 @@ public class ProgramConfigurationController {
 	@GetMapping("/getIterationCalendar")
 	public List<IterationPlan> getIterationPlanCalendar(@RequestParam Long programPlanId){
 		return iterationPlanRepository.findByProgramPlanId(programPlanId);
+	}
+	
+	@GetMapping("/getConfiguredYears")
+	public Set<String> getConfiguredYears(){
+		List<ProgramPlan> pp=programPlanRepository.findAll();
+		return pp.stream().map(p->p.getFiYear()).distinct().collect(Collectors.toSet());
 	}
 	
 }

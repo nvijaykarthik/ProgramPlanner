@@ -25,6 +25,10 @@ public class PiPlanner {
 	@Column
 	String featureId;
 	@Column
+	String fJiraLnk;
+	@Column
+	String storyJiraLnk;
+	@Column
 	String storyNumber;
 	@Column
 	String description;
@@ -123,5 +127,17 @@ public class PiPlanner {
 	}
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
+	}
+	public String getfJiraLnk() {
+		return fJiraLnk;
+	}
+	public void setfJiraLnk(String fJiraLnk) {
+		this.fJiraLnk = fJiraLnk;
+	}
+	public String getStoryJiraLnk() {
+		return storyJiraLnk;
+	}
+	public void setStoryJiraLnk(String storyJiraLnk) {
+		this.storyJiraLnk = storyJiraLnk;
 	}	
 }
