@@ -18,7 +18,7 @@ public class ProgramGoal {
 	Long portfolioId;
 	@Column
 	Long teamId;
-	@Column(unique = true,nullable = false)
+	@Column
 	Long programPlanId;
 	@Column
 	String piObjective;

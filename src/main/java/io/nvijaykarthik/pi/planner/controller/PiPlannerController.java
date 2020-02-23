@@ -44,7 +44,14 @@ public class PiPlannerController {
 	
 	@GetMapping("/getProgramGoalForTeam")
 	public ProgramGoal getProgramGoal(@RequestParam Long programId,@RequestParam Long teamId){
-		return programGoalRepository.findByProgramPlanIdAndTeamId(programId, teamId);
+		ProgramGoal pg=programGoalRepository.findByProgramPlanIdAndTeamId(programId, teamId);
+		if(null==pg) {
+			pg=new ProgramGoal();
+			pg.setProgramPlanId(programId);
+			pg.setTeamId(teamId);
+			pg.setPiObjective("");
+		}
+		return pg;
 	}
 	
 	@GetMapping("/getProgramGoalsForPortfolio")

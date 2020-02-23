@@ -1,5 +1,6 @@
 package io.nvijaykarthik.pi.planner.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nvijaykarthik.pi.planner.domain.CapacityDomain;
 import io.nvijaykarthik.pi.planner.entity.IterationPlan;
 import io.nvijaykarthik.pi.planner.entity.TeamMember;
 import io.nvijaykarthik.pi.planner.entity.Vacation;
@@ -60,18 +62,22 @@ public class VacationService {
 		return vacations;
 	}
 	
-	public Map<Long,Integer> getCapacity(Long programPlanId, Long teamId){
+	public List<CapacityDomain> getCapacity(Long programPlanId, Long teamId){
 		List<Vacation> vacs = vacationRepository.findByTeamIdAndProgramPlanId(teamId, programPlanId);
 		List<IterationPlan> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programPlanId);
 		List<TeamMember> teamMembers = teamMembersRepository.findByTeamId(teamId);
 		List<TeamMember> dev_tstMembers=teamMembers.stream().filter(tm->(tm.getRole().equals("DEV") || tm.getRole().equals("TEST"))).collect(Collectors.toList());
 		Integer totalMembers=dev_tstMembers.size();
-		Map<Long,Integer> capacity=new HashMap<>();
+		 List<CapacityDomain> capacities= new ArrayList<CapacityDomain>();
 		for(IterationPlan itrp:iterationPlanEntities) {
 			Integer vacSum=vacs.stream().filter(v->v.getItrId().equals(itrp.getId())).mapToInt(o->o.getLeaveDays()).sum();
 			Integer cap=(totalMembers*itrp.getWorkingDays())-vacSum;
-			capacity.put(itrp.getId(),cap);
+			CapacityDomain capacity = new CapacityDomain();
+			capacity.setCapacity(cap);
+			capacity.setItrId(itrp.getId());
+			capacity.setItrNo(itrp.getItrNo());
+			capacities.add(capacity);
 		}
-		return capacity;
+		return capacities;
 	}
 }
