@@ -29,7 +29,7 @@ public class VacationController {
 	}
 	
 	@GetMapping("/getVacations")
-	public Map<Long, Map<Integer, Vacation>> getVacationsPerProgram(@RequestParam Long programPlanId, @RequestParam Long teamId,@RequestParam Long portfolioId){
+	public Map<String, Map<Integer, Vacation>> getVacationsPerProgram(@RequestParam Long programPlanId, @RequestParam Long teamId,@RequestParam Long portfolioId){
 		return vacationService.getVacationPlanForProgram(programPlanId, teamId, portfolioId);
 	}
 	

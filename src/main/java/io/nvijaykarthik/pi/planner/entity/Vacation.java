@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Vacation {
@@ -33,6 +34,10 @@ public class Vacation {
 	@Column
 	LocalDate createdDate=LocalDate.now();
 	
+	@Transient
+	String teamMemberName;
+	@Transient
+	Integer itrNo;
 	public Long getId() {
 		return Id;
 	}
@@ -92,6 +97,18 @@ public class Vacation {
 	}
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
+	}
+	public String getTeamMemberName() {
+		return teamMemberName;
+	}
+	public void setTeamMemberName(String teamMemberName) {
+		this.teamMemberName = teamMemberName;
+	}
+	public Integer getItrNo() {
+		return itrNo;
+	}
+	public void setItrNo(Integer itrNo) {
+		this.itrNo = itrNo;
 	}
 
 }

@@ -33,13 +33,14 @@ public class VacationService {
 		return vacationRepository.save(entity);
 	}
 
-	public Map<Long, Map<Integer, Vacation>> getVacationPlanForProgram(Long programPlanId, Long teamId,Long portfolioId) {
+	public Map<String, Map<Integer, Vacation>> getVacationPlanForProgram(Long programPlanId, Long teamId,Long portfolioId) {
 		List<Vacation> vacs = vacationRepository.findByTeamIdAndProgramPlanId(teamId, programPlanId);
 		List<TeamMember> teamMembers = teamMembersRepository.findByTeamId(teamId);
+		List<TeamMember> dev_tstMembers=teamMembers.stream().filter(tm->(tm.getRole().equals("DEV") || tm.getRole().equals("TEST"))).collect(Collectors.toList());
 		List<IterationPlan> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programPlanId);
-		Map<Long, Map<Integer, Vacation>> vacations = new HashMap<>();
+		Map<String, Map<Integer, Vacation>> vacations = new HashMap<>();
 		// fill map with default value
-		for (TeamMember tm : teamMembers) {
+		for (TeamMember tm : dev_tstMembers) {
 			Map<Integer, Vacation> itrData = new HashMap<>();
 			for (IterationPlan itr : iterationPlanEntities) {
 				Vacation vac = vacs.stream()
@@ -53,11 +54,13 @@ public class VacationService {
 					vac.setProgramPlanId(programPlanId);
 					vac.setTeamId(teamId);
 					vac.setTeamMemberId(tm.getId());
+					vac.setTeamMemberName(tm.getMemberName());
+					vac.setItrNo(itr.getItrNo());
 				}
 				
 				itrData.put(itr.getItrNo(), vac);
 			}
-			vacations.put(tm.getId(), itrData);
+			vacations.put(tm.getMemberName(), itrData);
 		}
 		return vacations;
 	}
