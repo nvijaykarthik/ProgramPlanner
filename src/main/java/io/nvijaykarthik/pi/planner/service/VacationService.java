@@ -56,6 +56,9 @@ public class VacationService {
 					vac.setTeamMemberId(tm.getId());
 					vac.setTeamMemberName(tm.getMemberName());
 					vac.setItrNo(itr.getItrNo());
+				}else {
+					vac.setTeamMemberName(tm.getMemberName());
+					vac.setItrNo(itr.getItrNo());
 				}
 				
 				itrData.put(itr.getItrNo(), vac);
