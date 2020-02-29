@@ -30,7 +30,7 @@ public class ProgramConfigurationController {
 	@Autowired
 	ProgramPlanRepository programPlanRepository;
 	
-	@PutMapping("/createProgramCalendar")
+	@PostMapping("/createProgramCalendar")
 	@Transactional
 	public List<ProgramPlan> createProgramPlanCalendar(@RequestParam String fiYear,@RequestParam Long portfolioId){
 		List<ProgramPlan> pies=new ArrayList<ProgramPlan>();
@@ -61,6 +61,10 @@ public class ProgramConfigurationController {
 	
 	@PostMapping("/saveIterationCalendar")
 	public IterationPlan saveIterationEntity(@RequestBody IterationPlan iterationPlanEntity) {
+		
+		IterationPlan plan=iterationPlanRepository.findByItrNoAndProgramPlanId(iterationPlanEntity.getItrNo(), iterationPlanEntity.getProgramPlanId());
+		if(null!=plan)
+			throw new IllegalArgumentException("iteration No is already available");
 		return iterationPlanRepository.save(iterationPlanEntity);
 	}
 	

@@ -9,5 +9,5 @@ import io.nvijaykarthik.pi.planner.entity.IterationPlan;
 public interface IterationPlanRepository extends JpaRepository<IterationPlan, Long>{
 
 	List<IterationPlan> findByProgramPlanId(Long programPlanId);
-	
+	IterationPlan findByItrNoAndProgramPlanId(Integer itrNo,Long programPlanId);
 }
