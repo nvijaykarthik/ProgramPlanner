@@ -63,7 +63,7 @@ public class ProgramConfigurationController {
 	public IterationPlan saveIterationEntity(@RequestBody IterationPlan iterationPlanEntity) {
 		
 		IterationPlan plan=iterationPlanRepository.findByItrNoAndProgramPlanId(iterationPlanEntity.getItrNo(), iterationPlanEntity.getProgramPlanId());
-		if(null!=plan)
+		if(null!=plan && (null==iterationPlanEntity.getId() || iterationPlanEntity.getId().equals(0)))
 			throw new IllegalArgumentException("iteration No is already available");
 		return iterationPlanRepository.save(iterationPlanEntity);
 	}
