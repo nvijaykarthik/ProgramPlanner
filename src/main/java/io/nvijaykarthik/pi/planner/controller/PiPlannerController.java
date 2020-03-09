@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.nvijaykarthik.pi.planner.entity.IterationPlan;
 import io.nvijaykarthik.pi.planner.entity.PiPlanner;
 import io.nvijaykarthik.pi.planner.entity.ProgramGoal;
+import io.nvijaykarthik.pi.planner.repository.IterationPlanRepository;
 import io.nvijaykarthik.pi.planner.repository.PiPlannerRepository;
 import io.nvijaykarthik.pi.planner.repository.ProgramGoalRepository;
 
@@ -27,6 +29,9 @@ public class PiPlannerController {
 	@Autowired
 	ProgramGoalRepository programGoalRepository;
 	
+	@Autowired
+	private IterationPlanRepository iterationPlanRepository;
+	
 	@PostMapping("/savePiPlanner")
 	public PiPlanner savePiPlanner(@RequestBody PiPlanner piPlanner) {
 		return piPlannerRepository.save(piPlanner);
@@ -34,7 +39,18 @@ public class PiPlannerController {
 	
 	@GetMapping("/getPiPlanners")
 	public List<PiPlanner> getPiPlanners(@RequestParam Long programId,@RequestParam Long teamId){
-		return piPlannerRepository.findByProgramPlanIdAndTeamId(programId, teamId);
+		List<IterationPlan> iterationPlanEntities = iterationPlanRepository.findByProgramPlanId(programId);
+		List<PiPlanner> planList=piPlannerRepository.findByProgramPlanIdAndTeamId(programId, teamId);
+		for(PiPlanner pi:planList) {
+			IterationPlan itr=iterationPlanEntities.stream().filter(itrs->{
+				return itrs.getId().equals(pi.getItrId());
+			}).findFirst().orElse(null);
+			
+			if(null!=itr) {
+				pi.setItrNo(itr.getItrNo());
+			}
+		}
+		return planList;
 	}
 	
 	@PostMapping("/saveProgramGoal")

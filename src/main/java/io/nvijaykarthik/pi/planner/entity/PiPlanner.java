@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class PiPlanner {
@@ -22,6 +23,8 @@ public class PiPlanner {
 	Long programPlanId;
 	@Column
 	Long itrId;
+	@Transient
+	Integer itrNo;
 	@Column
 	String featureId;
 	@Column
@@ -139,5 +142,11 @@ public class PiPlanner {
 	}
 	public void setStoryJiraLnk(String storyJiraLnk) {
 		this.storyJiraLnk = storyJiraLnk;
+	}
+	public Integer getItrNo() {
+		return itrNo;
+	}
+	public void setItrNo(Integer itrNo) {
+		this.itrNo = itrNo;
 	}	
 }
