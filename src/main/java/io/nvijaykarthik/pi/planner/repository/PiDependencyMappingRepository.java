@@ -8,4 +8,6 @@ import io.nvijaykarthik.pi.planner.entity.PiDependencyMapping;
 
 public interface PiDependencyMappingRepository extends JpaRepository<PiDependencyMapping, Long> {
 	List<PiDependencyMapping> findByProgramPlanId(Long programPlanId);
+	
+	List<PiDependencyMapping> findByYearAndPortfolioIdAndProgramPlanId(Long year,Long portolioId, Long programPlanId);
 }
