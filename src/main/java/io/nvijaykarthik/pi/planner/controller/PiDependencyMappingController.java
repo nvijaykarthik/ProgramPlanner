@@ -38,5 +38,19 @@ public class PiDependencyMappingController {
 		
 		return piDependencyMappings;
 	}
+	
+	@GetMapping("/removeDependencyMapping")
+	public boolean getDependencyMappings(@RequestParam Long id){
+		boolean status=false;
+		try {
+			piDependencyMappingRepository.deleteById(id);
+			status=true;
+		} catch (Exception e) {
+			System.out.println("Error while removing dependency::"+id);
+		}
+		 
+		
+		return status;
+	}
 
 }
